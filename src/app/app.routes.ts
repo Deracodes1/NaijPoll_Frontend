@@ -8,11 +8,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/signup/signup.component').then((m) => m.SignupComponent),
     canActivate: [publicGuard],
   },
-  // {
-  //   path: 'login',
-  //   loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
-  //   canActivate: [publicGuard],
-  // },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login').then((m) => m.Login),
+    canActivate: [publicGuard],
+  },
   // {
   //   path: '',
   //   loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),

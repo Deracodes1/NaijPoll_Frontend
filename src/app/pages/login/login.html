@@ -1,0 +1,58 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">
+        <span class="logo-icon">🗳️</span>
+        <span class="logo-text">NaijPoll</span>
+      </div>
+      <h1 class="title">Sign In</h1>
+      <p class="subtitle">Enter your credentials to access the ballot box.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <app-input
+        id="email"
+        label="Email Address"
+        type="email"
+        placeholder="ezemeniachidera@gmail.com"
+        icon="✉️"
+        [control]="emailControl"
+        errorMessage="Please enter a valid email address"
+      />
+
+      <div class="password-wrapper">
+        <app-input
+          id="password"
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+          icon="🔒"
+          [control]="passwordControl"
+          errorMessage="Password is required"
+        />
+      </div>
+
+      <div class="forgot-password">
+        <a routerLink="/forgot-password">Forgot password?</a>
+      </div>
+
+      @if (authService.error()) {
+        <app-alert [message]="authService.error()!" type="error" />
+      }
+
+      <app-button type="submit" [disabled]="!canSubmit()" [loading]="authService.isLoading()">
+        Sign In →
+      </app-button>
+    </form>
+
+    <p class="login-footer">
+      Don't have an account?
+      <a routerLink="/signup" class="signup-link">Sign up</a>
+    </p>
+
+    <div class="verified-badge">
+      <span>🛡️</span>
+      <span>Official INEC Verified Portal</span>
+    </div>
+  </div>
+</div>

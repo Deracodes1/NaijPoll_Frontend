@@ -42,3 +42,17 @@ export interface PasswordRequirement {
   label: string;
   test: (password: string) => boolean;
 }
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponseData {
+  access_token: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+  };
+}
