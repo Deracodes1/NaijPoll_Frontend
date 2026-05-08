@@ -1,0 +1,85 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <!-- Header -->
+    <div class="signup-header">
+      <div class="logo">
+        <span class="logo-icon">🗳️</span>
+        <span class="logo-text">NaijPoll</span>
+      </div>
+      <h1 class="title">Voter Registration</h1>
+      <p class="subtitle">Secure your voice in Nigeria's democratic future.</p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+      <!-- Name -->
+      <app-input
+        id="name"
+        label="Full Name"
+        placeholder="Enter your full legal name"
+        icon="👤"
+        [control]="nameControl"
+        errorMessage="Name must be at least 2 characters"
+      />
+
+      <!-- Email -->
+      <app-input
+        id="email"
+        label="Email Address"
+        type="email"
+        placeholder="e.g. name@domain.com"
+        icon="✉️"
+        [control]="emailControl"
+        errorMessage="Please enter a valid email address"
+      />
+
+      <!-- State -->
+      <app-select
+        id="state"
+        label="State of Residence"
+        placeholder="Select your state"
+        icon="🏛️"
+        [control]="stateControl"
+        [options]="states"
+        errorMessage="Please select your state"
+      />
+
+      <!-- Password -->
+      <div class="password-section">
+        <app-input
+          id="password"
+          label="Password"
+          [type]="showPassword() ? 'text' : 'password'"
+          placeholder="Create a strong password"
+          icon="🔒"
+          [control]="passwordControl"
+          errorMessage="Password does not meet requirements"
+        />
+        <button type="button" class="toggle-password" (click)="togglePassword()">
+          {{ showPassword() ? '🙈' : '👁️' }}
+        </button>
+      </div>
+
+      <!-- Password Checklist -->
+      @if (passwordControl.value) {
+        <app-password-checklist [password]="passwordControl.value" />
+      }
+
+      <!-- Error Alert -->
+      @if (authService.error()) {
+        <app-alert [message]="authService.error()!" type="error" />
+      }
+
+      <!-- Submit Button -->
+      <app-button type="submit" [disabled]="!canSubmit()" [loading]="authService.isLoading()">
+        Create Account →
+      </app-button>
+    </form>
+
+    <!-- Footer -->
+    <p class="signup-footer">
+      Already have an account?
+      <a routerLink="/login" class="login-link">Sign in</a>
+    </p>
+  </div>
+</div>
