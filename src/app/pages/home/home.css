@@ -147,3 +147,8 @@
   padding: 1.5rem;
   text-align: center;
 }
+@media (min-width: 320px) {
+  .filters {
+    flex-direction: column;
+  }
+}

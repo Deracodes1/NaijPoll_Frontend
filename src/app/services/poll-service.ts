@@ -27,4 +27,12 @@ export class PollService {
   getPoll(id: string): Observable<ApiSuccessResponse<Poll>> {
     return this.http.get<ApiSuccessResponse<Poll>>(`${this.apiUrl}/polls/${id}`);
   }
+  submitVote(pollId: string, optionId: string) {
+    return this.http.post<{
+      success: boolean;
+      statusCode: number;
+      data: any;
+      message: string;
+    }>(`${this.apiUrl}/polls/${pollId}/votes`, { optionId });
+  }
 }

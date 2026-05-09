@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PollService } from '../../services/poll-service';
 import { AuthService } from '../../services/auth.service';
@@ -14,7 +14,7 @@ import { TitleCasePipe } from '@angular/common';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   readonly pollService = inject(PollService);
   readonly authService = inject(AuthService);
 
@@ -27,7 +27,7 @@ export class HomeComponent {
 
   readonly filters = ['all', 'active', 'closed', 'draft'];
 
-  constructor() {
+  ngOnInit(): void {
     this.loadPolls();
   }
 

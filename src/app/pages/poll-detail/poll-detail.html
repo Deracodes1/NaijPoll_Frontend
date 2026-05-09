@@ -37,7 +37,7 @@
 
       <!-- Active Poll -->
       @if (poll()!.status === 'active') {
-        @if (hasVoted()) {
+        @if (hasVoted() || voteSuccess()) {
           <!-- Thank You -->
           <div class="thank-you">
             <h2>THANK YOU FOR VOTING!</h2>
@@ -59,7 +59,7 @@
               <button
                 class="option-card"
                 [class.selected]="selectedOption() === option.id"
-                [disabled]="!isAuthenticated"
+                [disabled]="!isAuthenticated || isVoting()"
                 (click)="selectOption(option.id)"
               >
                 <span class="option-radio">
@@ -78,13 +78,23 @@
             </div>
           }
 
+          @if (voteError()) {
+            <div class="vote-error">{{ voteError() }}</div>
+          }
+
           @if (isAuthenticated && selectedOption()) {
             <div class="vote-action">
               <p class="vote-confirm">
                 By clicking "Submit Vote", you confirm that this selection represents your primary
                 choice for {{ poll()!.name }}.
               </p>
-              <app-button type="button" (click)="submitVote()"> Submit Vote → </app-button>
+              <app-button type="button" [disabled]="isVoting()" (click)="submitVote()">
+                @if (isVoting()) {
+                  Submitting...
+                } @else {
+                  Submit Vote →
+                }
+              </app-button>
             </div>
           }
         }

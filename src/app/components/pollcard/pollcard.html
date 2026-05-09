@@ -1,6 +1,6 @@
 <div class="poll-card">
   <div class="poll-header">
-    <span class="status-badge" [class]="poll().status | statusBadge | keyvalue: 'class'">
+    <span class="status-badge" [class]="poll().status">
       {{ (poll().status | statusBadge).text }}
     </span>
     <span class="vote-count">🗳️ {{ poll().options.length }} options</span>
