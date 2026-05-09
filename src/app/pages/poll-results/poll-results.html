@@ -1,0 +1,96 @@
+<div class="results-container">
+  <!-- Header -->
+  <div class="results-header">
+    <a routerLink="/" class="back-link">← Back to Polls</a>
+    <h1 class="page-title">Poll Results</h1>
+  </div>
+
+  <!-- Loading -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading results...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (error()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <p class="error-message">{{ error() }}</p>
+      <button class="retry-btn" (click)="loadResults()">Try Again</button>
+    </div>
+  }
+
+  <!-- No Participation -->
+  @if (hasNoParticipation()) {
+    <div class="no-participation">
+      <div class="empty-icon">📊</div>
+      <h2>No Participation Yet</h2>
+      <p>
+        No one from <strong>{{ selectedState() }}</strong> has voted in this poll.
+      </p>
+      <button class="retry-btn" (click)="onStateChange('All States')">View All States</button>
+    </div>
+  }
+
+  <!-- Results Content -->
+  @if (!isLoading() && !error() && !hasNoParticipation() && results().length > 0) {
+    <div class="results-content">
+      <!-- State Filter -->
+      <div class="filter-section">
+        <label for="state-filter" class="filter-label">Filter by State</label>
+        <select
+          id="state-filter"
+          class="state-select"
+          [value]="selectedState()"
+          (change)="onStateChange($any($event.target).value)"
+        >
+          @for (state of nigerianStates; track state) {
+            <option [value]="state">{{ state }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Total Votes -->
+      <div class="total-votes">
+        <span class="total-label">Total Votes</span>
+        <span class="total-count">{{ totalVotes() | number }}</span>
+      </div>
+
+      <!-- Results List -->
+      <div class="results-list">
+        @for (result of results(); track result.optionId) {
+          <div class="result-item" [class.winner]="result.count === maxVotes() && result.count > 0">
+            <div class="result-header">
+              <span class="option-name">{{ result.optionText }}</span>
+              <div class="result-numbers">
+                <span class="vote-count">{{ result.count | number }} votes</span>
+                <span class="vote-percentage">{{ getPercentage(result.count) }}</span>
+              </div>
+            </div>
+
+            <div class="bar-container">
+              <div
+                class="progress-bar"
+                [style.width.%]="(result.count / totalVotes()) * 100"
+                [style.min-width.%]="result.count > 0 ? 2 : 0"
+              ></div>
+            </div>
+
+            @if (result.count === maxVotes() && result.count > 0) {
+              <span class="winner-badge">Leading</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Empty State (All States, zero total) -->
+      @if (totalVotes() === 0) {
+        <div class="empty-results">
+          <p>No votes have been cast yet. Check back later!</p>
+        </div>
+      }
+    </div>
+  }
+</div>

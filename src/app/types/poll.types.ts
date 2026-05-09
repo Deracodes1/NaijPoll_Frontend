@@ -42,3 +42,16 @@ export interface PollsResponse {
   data: Poll[];
   meta: PollMeta;
 }
+export interface VoteResult {
+  optionId: string;
+  optionText: string;
+  count: number;
+}
+
+export interface ResultsResponse {
+  success: boolean;
+  statusCode: number;
+  data: VoteResult[];
+  message: string;
+  timestamp: string;
+}

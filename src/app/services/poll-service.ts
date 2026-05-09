@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import type { Poll, PollsResponse } from '../types/poll.types';
+import type { Poll, PollsResponse, ResultsResponse } from '../types/poll.types';
 import type { ApiSuccessResponse } from '../types/auth.types';
 
 @Injectable({
@@ -34,5 +34,14 @@ export class PollService {
       data: any;
       message: string;
     }>(`${this.apiUrl}/polls/${pollId}/votes`, { optionId });
+  }
+  getPollResults(pollId: string, state?: string) {
+    let url = `${this.apiUrl}/polls/${pollId}/votes/results`;
+
+    if (state && state !== 'All States') {
+      url += `?state=${encodeURIComponent(state)}`;
+    }
+
+    return this.http.get<ResultsResponse>(url);
   }
 }

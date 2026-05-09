@@ -35,6 +35,12 @@ export const routes: Routes = [
       import('./pages/poll-detail/poll-detail').then((m) => m.PollDetailComponent),
   },
   {
+    path: 'results',
+    loadComponent: () =>
+      import('./pages/poll-results/poll-results').then((m) => m.PollResultsComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: '',
   },
