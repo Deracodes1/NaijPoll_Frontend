@@ -6,11 +6,11 @@ import { PollCardComponent } from '../../components/pollcard/pollcard';
 import { ButtonComponent } from '../../components/button/button.component';
 import type { Poll } from '../../types/poll.types';
 import type { PollMeta } from '../../types/poll.types';
-
+import { TitleCasePipe } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, PollCardComponent, ButtonComponent],
+  imports: [RouterLink, PollCardComponent, ButtonComponent, TitleCasePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

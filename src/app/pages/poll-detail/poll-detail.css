@@ -1,0 +1,195 @@
+.poll-detail-container {
+  min-height: 100vh;
+  padding: 1.5rem;
+  background: #f9fafb;
+}
+
+.poll-detail-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.poll-header {
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.badge-active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-closed {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.badge-draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.poll-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1rem;
+}
+
+.poll-description {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.closed-message,
+.draft-message {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.closed-message p,
+.draft-message p {
+  color: #6b7280;
+  margin: 0 0 1rem;
+}
+
+.btn-results {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #059669;
+  color: white;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.thank-you {
+  text-align: center;
+  padding: 2rem;
+  background: #f0fdf4;
+  border-radius: 0.75rem;
+}
+
+.thank-you h2 {
+  color: #059669;
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+}
+
+.thank-you p {
+  color: #374151;
+  font-size: 0.875rem;
+  margin: 0 0 1.5rem;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option-card:hover:not(:disabled) {
+  border-color: #059669;
+}
+
+.option-card.selected {
+  border-color: #059669;
+  background: #f0fdf4;
+}
+
+.option-card:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.option-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.option-card.selected .option-radio {
+  border-color: #059669;
+}
+
+.radio-filled {
+  width: 10px;
+  height: 10px;
+  background: #059669;
+  border-radius: 50%;
+}
+
+.option-text {
+  font-size: 1rem;
+  color: #111827;
+}
+
+.auth-required {
+  text-align: center;
+  padding: 1rem;
+  color: #6b7280;
+}
+
+.auth-required a {
+  color: #059669;
+  font-weight: 600;
+}
+
+.vote-action {
+  margin-top: 1.5rem;
+}
+
+.vote-confirm {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 1rem;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+}

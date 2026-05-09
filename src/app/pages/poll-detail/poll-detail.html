@@ -1,1 +1,94 @@
-<p>poll-detail works!</p>
+<div class="poll-detail-container">
+  @if (isLoading()) {
+    <div class="loading">Loading poll...</div>
+  } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (poll()) {
+    <div class="poll-detail-card">
+      <!-- Back -->
+      <a routerLink="/" class="back-link">← Back to Polls</a>
+
+      <!-- Header -->
+      <div class="poll-header">
+        <span class="status-badge" [class]="'badge-' + poll()!.status">
+          {{ poll()!.status | uppercase }}
+        </span>
+      </div>
+
+      <h1 class="poll-title">{{ poll()!.name }}</h1>
+      <p class="poll-description">{{ poll()!.description }}</p>
+
+      <!-- Closed Message -->
+      @if (poll()!.status === 'closed') {
+        <div class="closed-message">
+          <p>This poll is concluded. View the results to see how citizens voted.</p>
+          <a [routerLink]="['/results']" [queryParams]="{ pollId: poll()!.id }" class="btn-results">
+            View Results
+          </a>
+        </div>
+      }
+
+      <!-- Draft Message -->
+      @if (poll()!.status === 'draft') {
+        <div class="draft-message">
+          <p>This poll is coming soon. Check back later to participate.</p>
+        </div>
+      }
+
+      <!-- Active Poll -->
+      @if (poll()!.status === 'active') {
+        @if (hasVoted()) {
+          <!-- Thank You -->
+          <div class="thank-you">
+            <h2>THANK YOU FOR VOTING!</h2>
+            <p>
+              Your contribution to <strong>{{ poll()!.name }}</strong> has been securely recorded.
+            </p>
+            <a
+              [routerLink]="['/results']"
+              [queryParams]="{ pollId: poll()!.id }"
+              class="btn-results"
+            >
+              View Results
+            </a>
+          </div>
+        } @else {
+          <!-- Options -->
+          <div class="options-list">
+            @for (option of poll()!.options; track option.id) {
+              <button
+                class="option-card"
+                [class.selected]="selectedOption() === option.id"
+                [disabled]="!isAuthenticated"
+                (click)="selectOption(option.id)"
+              >
+                <span class="option-radio">
+                  @if (selectedOption() === option.id) {
+                    <span class="radio-filled"></span>
+                  }
+                </span>
+                <span class="option-text">{{ option.optionText }}</span>
+              </button>
+            }
+          </div>
+
+          @if (!isAuthenticated) {
+            <div class="auth-required">
+              <p>Please <a routerLink="/login">sign in</a> to vote in this poll.</p>
+            </div>
+          }
+
+          @if (isAuthenticated && selectedOption()) {
+            <div class="vote-action">
+              <p class="vote-confirm">
+                By clicking "Submit Vote", you confirm that this selection represents your primary
+                choice for {{ poll()!.name }}.
+              </p>
+              <app-button type="button" (click)="submitVote()"> Submit Vote → </app-button>
+            </div>
+          }
+        }
+      }
+    </div>
+  }
+</div>
