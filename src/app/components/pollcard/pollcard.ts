@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { StatusBadgePipe } from '../../pipes/statusbadge-pipe';
+import type { Poll } from '../../types/poll.types';
 
 @Component({
   selector: 'app-pollcard',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink, StatusBadgePipe],
   templateUrl: './pollcard.html',
   styleUrl: './pollcard.css',
 })
-export class Pollcard {
-
+export class PollCardComponent {
+  readonly poll = input.required<Poll>();
+  readonly isAuthenticated = input<boolean>(false);
+  readonly vote = output<string>();
 }

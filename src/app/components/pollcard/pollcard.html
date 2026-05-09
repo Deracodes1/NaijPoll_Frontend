@@ -1,1 +1,23 @@
-<p>pollcard works!</p>
+<div class="poll-card">
+  <div class="poll-header">
+    <span class="status-badge" [class]="poll().status | statusBadge | keyvalue: 'class'">
+      {{ (poll().status | statusBadge).text }}
+    </span>
+    <span class="vote-count">🗳️ {{ poll().options.length }} options</span>
+  </div>
+
+  <h3 class="poll-title">{{ poll().name }}</h3>
+  <p class="poll-description">{{ poll().description }}</p>
+
+  <div class="poll-footer">
+    @if (poll().status === 'active') {
+      <a [routerLink]="['/poll', poll().id]" class="btn-vote">View & Vote</a>
+    } @else if (poll().status === 'closed') {
+      <a [routerLink]="['/results']" [queryParams]="{ pollId: poll().id }" class="btn-results"
+        >View Results</a
+      >
+    } @else {
+      <span class="btn-draft">Coming Soon</span>
+    }
+  </div>
+</div>
