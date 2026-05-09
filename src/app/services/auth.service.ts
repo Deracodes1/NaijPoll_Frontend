@@ -4,6 +4,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import type { UserProfile } from '../types/user.types';
 import type {
   RegisterPayload,
   RegisterResponseData,
@@ -23,6 +24,7 @@ export class AuthService {
   readonly isLoading = signal(false);
   readonly error = signal<string | null>(null);
   readonly success = signal(false);
+  readonly user = signal<UserProfile | null>(this.getStoredUser());
 
   register(payload: RegisterPayload): Observable<ApiSuccessResponse<RegisterResponseData>> {
     this.isLoading.set(true);
@@ -70,9 +72,19 @@ export class AuthService {
   getToken(): string | null {
     return sessionStorage.getItem('access_token');
   }
+  saveUser(user: UserProfile): void {
+    sessionStorage.setItem('user', JSON.stringify(user));
+    this.user.set(user);
+  }
 
-  clearToken(): void {
+  getStoredUser(): UserProfile | null {
+    const stored = sessionStorage.getItem('user');
+    return stored ? JSON.parse(stored) : null;
+  }
+  clearAuth(): void {
     sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('user');
+    this.user.set(null);
   }
 
   setSuccess(): void {

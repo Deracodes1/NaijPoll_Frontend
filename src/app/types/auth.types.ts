@@ -1,4 +1,4 @@
-// src/app/types/auth.types.ts
+import type { UserProfile } from './user.types';
 
 export interface RegisterPayload {
   name: string;
@@ -7,16 +7,14 @@ export interface RegisterPayload {
   state: string;
 }
 
-export interface RegisterResponseUser {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-}
-
 export interface RegisterResponseData {
   access_token: string;
-  user: RegisterResponseUser;
+  user: UserProfile;
+}
+
+export interface LoginResponseData {
+  access_token: string;
+  user: UserProfile;
 }
 
 export interface ApiSuccessResponse<T> {
@@ -45,14 +43,4 @@ export interface PasswordRequirement {
 export interface LoginPayload {
   email: string;
   password: string;
-}
-
-export interface LoginResponseData {
-  access_token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    role: string;
-  };
 }

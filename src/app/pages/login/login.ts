@@ -49,6 +49,7 @@ export class Login {
     this.authService.login(payload).subscribe({
       next: (response) => {
         this.authService.saveToken(response.data.access_token);
+        this.authService.saveUser(response.data.user);
         this.authService.setSuccess();
         this.router.navigate(['/']);
       },
