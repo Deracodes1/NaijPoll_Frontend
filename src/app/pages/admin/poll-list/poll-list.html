@@ -1,0 +1,81 @@
+<div class="poll-list-container">
+  <div class="list-header">
+    <h1 class="page-title">All Polls</h1>
+    <a routerLink="/admin/create" class="btn-create">+ Create Poll</a>
+  </div>
+
+  <!-- Status Filter -->
+  <div class="filter-bar">
+    @for (filter of statusFilters; track filter.value) {
+      <button
+        class="filter-btn"
+        [class.active]="selectedStatus() === filter.value"
+        (click)="onStatusChange(filter.value)"
+      >
+        {{ filter.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Loading -->
+  @if (isLoading() && polls().length === 0) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading polls...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (error()) {
+    <div class="error-state">
+      <p>{{ error() }}</p>
+      <button class="retry-btn" (click)="loadPolls()">Try Again</button>
+    </div>
+  }
+
+  <!-- Poll Grid -->
+  @if (polls().length > 0) {
+    <div class="polls-grid">
+      @for (poll of polls(); track poll.id) {
+        <a [routerLink]="['/admin/polls', poll.id]" class="poll-card">
+          <div class="poll-header">
+            <span class="status-badge" [class]="getStatusClass(poll.status)">
+              {{ poll.status | uppercase }}
+            </span>
+            <span class="poll-date">{{ poll.createdAt | date: 'MMM d, y' }}</span>
+          </div>
+
+          <h3 class="poll-title">{{ poll.name }}</h3>
+          <p class="poll-description">{{ poll.description }}</p>
+
+          <div class="poll-meta">
+            <span class="meta-item">{{ poll.options.length }} options</span>
+            @if (poll.endsAt) {
+              <span class="meta-item">Ends {{ poll.endsAt | date: 'MMM d' }}</span>
+            }
+          </div>
+        </a>
+      }
+    </div>
+
+    <!-- Load More -->
+    @if (hasMorePages()) {
+      <div class="load-more">
+        <button class="btn-load-more" [disabled]="isLoadingMore()" (click)="loadMore()">
+          @if (isLoadingMore()) {
+            Loading...
+          } @else {
+            Load More
+          }
+        </button>
+      </div>
+    }
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !error() && polls().length === 0) {
+    <div class="empty-state">
+      <p>No {{ selectedStatus() ? selectedStatus() + ' ' : '' }}polls found.</p>
+    </div>
+  }
+</div>

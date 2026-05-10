@@ -2,7 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import type { Poll, PollsResponse, ResultsResponse } from '../types/poll.types';
+import type {
+  Poll,
+  PollsResponse,
+  ResultsResponse,
+  PollStatus,
+  SinglePollResponse,
+} from '../types/poll.types';
 import type { ApiSuccessResponse } from '../types/auth.types';
 
 @Injectable({
@@ -57,5 +63,17 @@ export class PollService {
       data: any;
       message: string;
     }>(`${this.apiUrl}/polls`, payload);
+  }
+
+  updatePollStatus(id: string, status: PollStatus) {
+    return this.http.patch<SinglePollResponse>(`${this.apiUrl}/polls/${id}`, { status });
+  }
+
+  deletePoll(id: string) {
+    return this.http.delete<SinglePollResponse>(`${this.apiUrl}/polls/${id}`);
+  }
+
+  closePoll(id: string) {
+    return this.http.post<SinglePollResponse>(`${this.apiUrl}/polls/${id}/close`, {});
   }
 }

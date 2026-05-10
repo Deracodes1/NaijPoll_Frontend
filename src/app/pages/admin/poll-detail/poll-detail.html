@@ -1,0 +1,92 @@
+<div class="poll-detail-container">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading poll...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <p>{{ error() }}</p>
+      <a routerLink="/admin/polls" class="back-link">← Back to Polls</a>
+    </div>
+  } @else if (poll()) {
+    <div class="poll-content">
+      <!-- Header -->
+      <div class="detail-header">
+        <a routerLink="/admin/polls" class="back-link">← Back to Polls</a>
+        <div class="header-actions">
+          <span class="status-badge" [class]="'badge-' + poll()!.status">
+            {{ poll()!.status | uppercase }}
+          </span>
+        </div>
+      </div>
+
+      <h1 class="poll-title">{{ poll()!.name }}</h1>
+      <p class="poll-description">{{ poll()!.description }}</p>
+
+      <!-- Meta -->
+      <div class="detail-meta">
+        <div class="meta-item">
+          <span class="meta-label">Created</span>
+          <span class="meta-value">{{ poll()!.createdAt | date: 'medium' }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Options</span>
+          <span class="meta-value">{{ poll()!.options.length }}</span>
+        </div>
+        @if (poll()!.endsAt) {
+          <div class="meta-item">
+            <span class="meta-label">Ends</span>
+            <span class="meta-value">{{ poll()!.endsAt | date: 'medium' }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Options -->
+      <div class="options-section">
+        <h3>Poll Options</h3>
+        <div class="options-list">
+          @for (option of poll()!.options; track option.id) {
+            <div class="option-item">
+              <span class="option-dot"></span>
+              <span class="option-text">{{ option.optionText }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Action Messages -->
+      @if (actionSuccess()) {
+        <div class="action-success">{{ actionSuccess() }}</div>
+      }
+      @if (actionError()) {
+        <div class="action-error">{{ actionError() }}</div>
+      }
+
+      <!-- Action Buttons -->
+      <div class="action-bar">
+        @if (poll()!.status === 'draft') {
+          <button
+            class="btn-action btn-activate"
+            [disabled]="actionLoading()"
+            (click)="activatePoll()"
+          >
+            {{ actionLoading() ? 'Processing...' : 'Activate Poll' }}
+          </button>
+        }
+
+        @if (poll()!.status === 'active') {
+          <button class="btn-action btn-close" [disabled]="actionLoading()" (click)="closePoll()">
+            {{ actionLoading() ? 'Processing...' : 'Close Poll' }}
+          </button>
+        }
+
+        @if (poll()!.status !== 'closed') {
+          <button class="btn-action btn-delete" [disabled]="actionLoading()" (click)="deletePoll()">
+            {{ actionLoading() ? 'Processing...' : 'Delete Poll' }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

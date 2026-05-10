@@ -54,12 +54,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/admin/createpoll/createpoll').then((m) => m.CreatePollComponent),
       },
-      // {
-      //   path: 'polls',
-      //   loadComponent: () =>
-      //     import('./pages/admin/poll-list/poll-list.component').then((m) => m.PollListComponent),
-      // },
-      // Add more routes later
+      {
+        path: 'polls',
+        loadComponent: () =>
+          import('./pages/admin/poll-list/poll-list').then((m) => m.PollListComponent),
+      },
+      {
+        path: 'polls/:id',
+        loadComponent: () =>
+          import('./pages/admin/poll-detail/poll-detail').then((m) => m.PollDetailComponent),
+      },
     ],
   },
   {

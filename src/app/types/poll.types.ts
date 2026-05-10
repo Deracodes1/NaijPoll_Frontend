@@ -55,3 +55,10 @@ export interface ResultsResponse {
   message: string;
   timestamp: string;
 }
+export interface SinglePollResponse {
+  success: boolean;
+  statusCode: number;
+  data: Poll;
+  message: string;
+  timestamp: string;
+}
