@@ -1,0 +1,37 @@
+<div class="admin-layout" [class.sidebar-closed]="!sidebarOpen()">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2 class="logo">🗳️ PollAdmin</h2>
+      <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        @if (sidebarOpen()) {
+          ✕
+        } @else {
+          ☰
+        }
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      @for (item of navItems; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-name">{{ authService.user()?.name }}</span>
+        <span class="user-role">{{ authService.user()?.role }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

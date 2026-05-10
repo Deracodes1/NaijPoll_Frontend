@@ -44,4 +44,18 @@ export class PollService {
 
     return this.http.get<ResultsResponse>(url);
   }
+  createPoll(payload: {
+    name: string;
+    description: string;
+    status?: string;
+    endsAt?: string;
+    options: string[];
+  }) {
+    return this.http.post<{
+      success: boolean;
+      statusCode: number;
+      data: any;
+      message: string;
+    }>(`${this.apiUrl}/polls`, payload);
+  }
 }
