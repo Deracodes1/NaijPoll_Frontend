@@ -13,6 +13,7 @@ import type {
   LoginPayload,
   LoginResponseData,
 } from '../types/auth.types';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class AuthService {
   readonly error = signal<string | null>(null);
   readonly success = signal(false);
   readonly user = signal<UserProfile | null>(this.getStoredUser());
+  readonly router = inject(Router);
 
   register(payload: RegisterPayload): Observable<ApiSuccessResponse<RegisterResponseData>> {
     this.isLoading.set(true);
@@ -81,10 +83,16 @@ export class AuthService {
     const stored = sessionStorage.getItem('user');
     return stored ? JSON.parse(stored) : null;
   }
+
+  setUser(user: UserProfile): void {
+    this.user.set(user);
+    sessionStorage.setItem('user', JSON.stringify(user));
+  }
   clearAuth(): void {
     sessionStorage.removeItem('access_token');
     sessionStorage.removeItem('user');
     this.user.set(null);
+    this.router.navigate(['/']);
   }
 
   setSuccess(): void {

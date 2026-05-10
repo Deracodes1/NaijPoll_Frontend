@@ -11,8 +11,11 @@
       <span class="logo-text">NaijPoll</span>
     </div>
     <div class="header-actions">
-      @if (isAuthenticated) {
-        <span class="state-badge">{{ userState }} State</span>
+      @if (isAuthenticated()) {
+        @if (isAdmin()) {
+          <a routerLink="/admin" class="btn-admin">Admin</a>
+        }
+
         <a routerLink="/profile" class="avatar-small">{{ authService.user()?.name?.[0] }}</a>
       } @else {
         <a routerLink="/login" class="btn-login">Sign In</a>
@@ -21,7 +24,7 @@
   </header>
 
   <!-- Welcome Banner -->
-  @if (isAuthenticated) {
+  @if (isAuthenticated()) {
     <div class="welcome-banner">
       <h2>Welcome back, Citizen</h2>
       <p>
@@ -30,7 +33,6 @@
       </p>
       <div class="banner-badges">
         <span class="banner-badge">✓ Verified Voter</span>
-        <span class="banner-badge">{{ userState }} State District</span>
       </div>
     </div>
   }
@@ -63,7 +65,7 @@
   } @else {
     <div class="polls-grid">
       @for (poll of polls(); track poll.id) {
-        <app-pollcard [poll]="poll" [isAuthenticated]="isAuthenticated" />
+        <app-pollcard [poll]="poll" [isAuthenticated]="isAuthenticated()" />
       }
     </div>
   }

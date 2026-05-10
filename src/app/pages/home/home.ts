@@ -1,12 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PollService } from '../../services/poll-service';
 import { AuthService } from '../../services/auth.service';
 import { PollCardComponent } from '../../components/pollcard/pollcard';
 import { ButtonComponent } from '../../components/button/button.component';
-import type { Poll } from '../../types/poll.types';
-import type { PollMeta } from '../../types/poll.types';
+import type { Poll, PollMeta } from '../../types/poll.types';
 import { TitleCasePipe } from '@angular/common';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -26,6 +26,11 @@ export class HomeComponent implements OnInit {
   readonly currentPage = signal(1);
 
   readonly filters = ['all', 'active', 'closed', 'draft'];
+
+  // Use computed signals for reactivity
+  readonly isAuthenticated = computed(() => !!this.authService.user());
+  readonly userState = computed(() => this.authService.user()?.state ?? null);
+  readonly isAdmin = computed(() => this.authService.user()?.role === 'admin');
 
   ngOnInit(): void {
     this.loadPolls();
@@ -67,13 +72,5 @@ export class HomeComponent implements OnInit {
   canLoadMore(): boolean {
     const m = this.meta();
     return !!m && m.page < m.totalPages;
-  }
-
-  get isAuthenticated(): boolean {
-    return !!this.authService.getToken();
-  }
-
-  get userState(): string | null {
-    return this.authService.user()?.state || null;
   }
 }

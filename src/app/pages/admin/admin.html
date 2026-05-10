@@ -1,20 +1,31 @@
-<div class="admin-layout" [class.sidebar-closed]="!sidebarOpen()">
-  <!-- Sidebar -->
-  <aside class="sidebar">
+<div class="admin-layout">
+  <!-- Overlay for mobile -->
+  @if (sidebarOpen()) {
+    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+  }
+
+  <!-- Sidebar with inline style for debugging -->
+  <aside class="sidebar" [style.transform]="sidebarOpen() ? 'translateX(0)' : 'translateX(-100%)'">
     <div class="sidebar-header">
       <h2 class="logo">🗳️ PollAdmin</h2>
-      <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar">
-        @if (sidebarOpen()) {
-          ✕
-        } @else {
-          ☰
-        }
+      <button
+        type="button"
+        class="toggle-btn close"
+        (click)="closeSidebar(); $event.stopPropagation()"
+        aria-label="Close sidebar"
+      >
+        ✕
       </button>
     </div>
 
     <nav class="sidebar-nav">
       @for (item of navItems; track item.path) {
-        <a [routerLink]="item.path" routerLinkActive="active" class="nav-link">
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          class="nav-link"
+          (click)="closeSidebar()"
+        >
           <span class="nav-icon">{{ item.icon }}</span>
           <span class="nav-label">{{ item.label }}</span>
         </a>
@@ -32,6 +43,21 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <router-outlet></router-outlet>
+    <!-- Mobile header bar -->
+    <div class="mobile-header">
+      <button
+        type="button"
+        class="toggle-btn open"
+        (click)="toggleSidebar(); $event.stopPropagation()"
+        aria-label="Open sidebar"
+      >
+        ☰
+      </button>
+      <span class="mobile-title">PollAdmin</span>
+    </div>
+
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
   </main>
 </div>
