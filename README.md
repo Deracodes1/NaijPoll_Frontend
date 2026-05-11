@@ -1,59 +1,89 @@
-# Naijpoll
+# NaijPoll — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Angular frontend for the NaijPoll Nigerian voting platform.
 
-## Development server
+**Live Demo:** [https://your-netlify-url.netlify.app](https://your-netlify-url.netlify.app)
 
-To start a local development server, run:
+---
+
+## Tech Stack
+
+- **Framework:** Angular 19+ (Standalone Components)
+- **Language:** TypeScript 5.x
+- **Styling:** CSS3 with custom responsive design
+- **State:** Angular Signals
+- **Forms:** Reactive Forms
+- **Routing:** Angular Router with lazy loading
+
+---
+
+## Prerequisites
+
+- Node.js v20+
+- npm v10+
+- Backend API running (see [NaijPoll API](https://github.com/your-username/naijpoll-api))
+
+---
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 ng serve
+
+# Build for production
+ng build --configuration production
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Project Structure
 
-## Code scaffolding
+src/
+├── components/ # Reusable UI (button, input, alert, pollcard)
+├── pages/ # Route-level pages
+│ ├── home/ # Public poll listing
+│ ├── login/ # Authentication
+│ ├── register/ # Account creation
+│ ├── profile/ # User profile
+│ ├── poll-detail/ # Voting page
+│ ├── results/ # Results with state filter
+│ └── admin/ # Admin dashboard
+│ ├── admin-layout/ # Sidebar shell
+│ ├── create-poll/ # Create poll form
+│ ├── poll-list/ # Admin poll listing
+│ └── poll-detail/ # Poll management
+├── services/ # API & business logic
+├── guards/ # Route protection
+├── types/ # TypeScript interfaces
+└── data/ # Static data (Nigerian states)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Features
 
-```bash
-ng generate component component-name
-```
+Public
+Browse polls with status filtering
+Cast votes (authenticated users)
+View results with state-based breakdown
+Admin Dashboard
+Create polls with 2–4 options
+Manage poll status (draft → active → closed)
+Delete polls
+Responsive sidebar navigation
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Environment Setup
 
-```bash
-ng generate --help
-```
+FOR LOCAL ENVIRONMENT
 
-## Building
+Create src/environments/environment.ts
+export const environment = {
+production: false,
+apiUrl: 'http://localhost:3000/api/v1',
+};
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+FOR LIVE
+Create src/environments/environment.prod.ts
+export const environment = {
+production: true,
+apiUrl: 'http://localhost:3000/api/v1',
+};
