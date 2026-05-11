@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-render-url.onrender.com/api/v1',
+  apiUrl: 'https://naijpoll-backend.onrender.com/api/v1',
 };
