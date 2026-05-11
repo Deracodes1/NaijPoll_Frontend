@@ -97,4 +97,7 @@ export class SignupComponent {
       },
     });
   }
+  goToLogin() {
+    this.router.navigate(['login']);
+  }
 }

@@ -58,4 +58,7 @@ export class Login {
       },
     });
   }
+  goToSign() {
+    this.router.navigate(['signup']);
+  }
 }
