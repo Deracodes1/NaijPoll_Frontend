@@ -8,7 +8,7 @@ Angular frontend for the NaijPoll Nigerian voting platform.
 
 ## Tech Stack
 
-- **Framework:** Angular 19+ (Standalone Components)
+- **Framework:** Angular 21+ (Standalone Components)
 - **Language:** TypeScript 5.x
 - **Styling:** CSS3 with custom responsive design
 - **State:** Angular Signals
