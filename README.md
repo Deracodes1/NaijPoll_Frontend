@@ -2,7 +2,7 @@
 
 Angular frontend for the NaijPoll Nigerian voting platform.
 
-**Live Demo:** [https://your-netlify-url.netlify.app](https://your-netlify-url.netlify.app)
+**Live Demo:** [https://naijpoll.netlify.app/](https://naijpoll.netlify.app/)
 
 ---
 
