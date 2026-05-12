@@ -21,13 +21,10 @@ export class AdminLayoutComponent {
   ];
 
   toggleSidebar(): void {
-    console.log('Toggling sidebar, current:', this.sidebarOpen());
     this.sidebarOpen.update((v) => !v);
-    console.log('After toggle:', this.sidebarOpen());
   }
 
   closeSidebar(): void {
-    console.log('Closing sidebar');
     this.sidebarOpen.set(false);
   }
 

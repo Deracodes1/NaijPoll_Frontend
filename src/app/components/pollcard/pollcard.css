@@ -136,7 +136,9 @@
   .poll-footer {
     flex-direction: column;
   }
-
+  .poll-card {
+    padding: 0 1.25rem;
+  }
   .btn-vote,
   .btn-results,
   .btn-draft {

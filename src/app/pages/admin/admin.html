@@ -7,7 +7,7 @@
   <!-- Sidebar with inline style for debugging -->
   <aside class="sidebar" [style.transform]="sidebarOpen() ? 'translateX(0)' : 'translateX(-100%)'">
     <div class="sidebar-header">
-      <h2 class="logo">🗳️ PollAdmin</h2>
+      <h2 class="logo">PollAdmin</h2>
       <button
         type="button"
         class="toggle-btn close"
@@ -26,7 +26,7 @@
           class="nav-link"
           (click)="closeSidebar()"
         >
-          <span class="nav-icon">{{ item.icon }}</span>
+          <!-- <span class="nav-icon">{{ item.icon }}</span> -->
           <span class="nav-label">{{ item.label }}</span>
         </a>
       }
