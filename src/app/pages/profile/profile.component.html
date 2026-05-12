@@ -10,9 +10,7 @@
       <p class="voter-id">{{ profile()!.id | voterId: profile()!.joinedDate }}</p>
     </div>
 
-    <app-button type="button" [disabled]="true">
-      ✎ Edit Profile
-    </app-button>
+    <app-button type="button" [disabled]="true"> ✎ Edit Profile </app-button>
 
     <div class="info-section">
       <div class="section-header">
@@ -27,7 +25,7 @@
 
     <div class="info-section">
       <div class="section-header">
-        <span class="section-icon">📍</span>
+        <span class="section-icon"></span>
         <span class="section-title">Registration Location</span>
       </div>
       <div class="info-row">
@@ -36,8 +34,6 @@
       </div>
     </div>
 
-    <button class="logout-btn" (click)="logout()">
-      🚪 Logout
-    </button>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
   </div>
 </div>
