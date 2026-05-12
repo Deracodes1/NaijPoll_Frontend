@@ -4,12 +4,13 @@
   padding: 1.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
-  /* Critical: allow card to shrink and prevent overflow */
   min-width: 0;
   overflow-wrap: break-word;
   word-wrap: break-word;
   display: flex;
   flex-direction: column;
+  /* Prevent content from bleeding out */
+  overflow: hidden;
 }
 
 /* Poll Header */
@@ -19,7 +20,6 @@
   align-items: center;
   margin-bottom: 0.75rem;
   gap: 0.5rem;
-  /* Prevent header from overflowing */
   min-width: 0;
 }
 
@@ -59,7 +59,6 @@
   color: #111827;
   margin: 0 0 0.5rem;
   line-height: 1.4;
-  /* Prevent long titles from breaking layout */
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -70,10 +69,9 @@
   margin: 0 0 1rem;
   line-height: 1.5;
   display: -webkit-box;
-  /* -webkit-line-clamp: 2; */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  /* Prevent description from expanding card */
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -87,8 +85,9 @@
 .poll-footer {
   display: flex;
   gap: 0.5rem;
-  /* Allow wrapping on very narrow cards */
   flex-wrap: wrap;
+  /* Critical: prevent overflow from gap + width: 100% */
+  min-width: 0;
 }
 
 /* Buttons */
@@ -97,17 +96,18 @@
 .btn-draft {
   display: inline-block;
   text-align: center;
-  padding: 0.625rem 1.5rem;
+  padding: 0.625rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.2s;
-  /* Prevent buttons from overflowing */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* Don't let flexbox shrink them too much */
+  flex-shrink: 0;
 }
 
 .btn-vote {
@@ -131,29 +131,35 @@
   opacity: 0.9;
 }
 
-/* Mobile: full-width stacked buttons */
+/* Mobile: stacked buttons that fit properly */
 @media (max-width: 639px) {
   .poll-footer {
     flex-direction: column;
+    /* Remove gap when stacking to prevent overflow */
+    gap: 0.5rem;
   }
-  .poll-card {
-    padding: 0 1.25rem;
-  }
+
   .btn-vote,
   .btn-results,
   .btn-draft {
     display: block;
+    /* Use calc to account for any parent padding */
     width: 100%;
+    box-sizing: border-box;
     padding: 0.75rem 1rem;
   }
 }
 
-/* Tablet+: buttons side by side with min-width */
+/* Tablet+: buttons side by side */
 @media (min-width: 640px) {
+  .poll-footer {
+    flex-direction: row;
+  }
+
   .btn-vote,
   .btn-results,
   .btn-draft {
-    min-width: 100px;
     flex: 1;
+    min-width: 0;
   }
 }
