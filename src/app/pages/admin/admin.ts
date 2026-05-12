@@ -15,6 +15,7 @@ export class AdminLayoutComponent {
   readonly sidebarOpen = signal(false);
 
   readonly navItems = [
+    { path: 'Home', label: 'Create Poll', icon: '➕' },
     { path: 'create', label: 'Create Poll', icon: '➕' },
     { path: 'polls', label: 'All Polls', icon: '📋' },
   ];
